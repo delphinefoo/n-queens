@@ -165,7 +165,7 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       var count = 0;
-      for (var i = 0; i <= this.rows().length; i++) {
+      for (var i = 0; i < this.rows().length; i++) {
         if (this.rows()[i][minorDiagonalColumnIndexAtFirstRow] === 1){
           count++;
         }
