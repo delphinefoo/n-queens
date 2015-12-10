@@ -125,7 +125,7 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      for (var i = 0; i < this.rows().length; i++){
+      for (var i = 0; i < this.get('n'); i++){
         if (this.hasColConflictAt(i)) {
           return true;
         }
@@ -145,7 +145,16 @@
       var count = 0;
       var size = this.get('n');
 
-      for ( ; rowIdx < size && colIdx >= 0; rowIdx++, colIdx++){
+      for( ; rowIdx < size && colIdx < size; rowIdx++, colIdx++ ){
+        if( colIdx >= 0 ) {
+          var row = this.get(rowIdx);
+          count += row[colIdx];
+        }
+      }
+
+      return count > 1;
+
+ /*     for ( ; rowIdx < size && colIdx >= 0; rowIdx++, colIdx++){
         if (colIdx >= 0) {
           if(this.get(rowIdx)[colIdx] === 1) {
             count++;
@@ -155,18 +164,26 @@
           }
         }
       }
-      return false;
+      return false;*/
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       var size = this.get('n');
-      for (var colIdx = 3; colIdx > 1 - size; colIdx--){
+
+      for( var i = 1 - size; i < size; i++ ) {
+        if( this.hasMajorDiagonalConflictAt(i) ) {
+          return true;
+        }
+      }
+
+      return false;
+      /*for (var colIdx = 3; colIdx > 1 - size; colIdx--){
         if (this.hasMajorDiagonalConflictAt(colIdx)){
           return true;
         }
       }
-      return false;
+      return false;*/
     },
 
 
@@ -181,7 +198,16 @@
       var count = 0;
       var size = this.get('n');
 
-      for (; rowIdx < size && colIdx >= 0; rowIdx++, colIdx--) {
+      for( ; rowIdx < size && colIdx >= 0; rowIdx++, colIdx-- ) {
+        if( colIdx < size ) {
+          var row = this.get(rowIdx);
+          count += row[colIdx];
+        }
+      }
+
+      return count > 1;
+
+      /*for (; rowIdx < size && colIdx >= 0; rowIdx++, colIdx--) {
         if (colIdx < size) {
           if (this.get(rowIdx)[colIdx] === 1) {
             count++;
@@ -191,18 +217,27 @@
           }
         }
       }
-      return false;
+      return false;*/
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var size = this.get('n');
-      for (var colIdx = 0; colIdx < size * 2 - 1; colIdx++) {
+
+       for( var i = (size * 2) - 1; i >= 0; i-- ) {
+        if( this.hasMinorDiagonalConflictAt(i) ) {
+          return true;
+        }
+      }
+
+      return false;
+
+      /*for (var colIdx = 0; colIdx < size * 2 - 1; colIdx++) {
         if (this.hasMinorDiagonalConflictAt(colIdx)) {
           return true;
         }
       }
-      return false;
+      return false;*/
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
